@@ -1,22 +1,10 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <iostream>
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
-int main()
-{
-	glfwInit();
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-	//glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-	return 0;
-}
-
-/* #include <iostream>
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
-
-using namespace std; 
-
+// sets up a callback to enable window resizing
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 {
     glViewport(0, 0, width, height);
@@ -24,41 +12,40 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 
 int main()
 {
-    if (!glfwInit())
-    {
-        cout << "Failed to initialize GLFW" << endl;
-        return -1;
-    }
+    // first we need to intialize our window with GLFW
+	glfwInit();
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-    glfwWindowHint(GLFW_SAMPLES, 4);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-
-    GLFWwindow* window;
-    window = glfwCreateWindow(800, 600, "ZMMR", NULL, NULL);
+    GLFWwindow* window = glfwCreateWindow(800, 600, "Tim's Chess", NULL, NULL);
     if (window == NULL)
     {
-        cout << "Failed to open GLFW window" << endl;
+        std::cout << "Failed to create GLFW window" << std::endl;
+        glfwTerminate();
         return -1;
     }
     glfwMakeContextCurrent(window);
 
+    // intialize glad to handle our OpenGL function pointers 
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
     {
-        cout << "Failed to initialize GLAD" << endl;
+        std::cout << "Failed to initialize GLAD" << std::endl;
         return -1;
     }
 
+    // set the viewport for our window and a callback function for
+    // resizing the window
     glViewport(0, 0, 800, 600);
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 
+    // set up the render loop
     while(!glfwWindowShouldClose(window))
     {
         glfwSwapBuffers(window);
-        glfwPollEvents();    
+        glfwPollEvents();
     }
 
     glfwTerminate();
-    return 0;
-} */
+	return 0;
+}
