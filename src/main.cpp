@@ -34,6 +34,11 @@ int main()
     }
     glfwMakeContextCurrent(window);
 
+    // set the viewport for our window and a callback function for
+    // resizing the window
+    glViewport(0, 0, 800, 600);
+    glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+
     // intialize glad to handle our OpenGL function pointers 
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
     {
@@ -41,10 +46,17 @@ int main()
         return -1;
     }
 
-    // set the viewport for our window and a callback function for
-    // resizing the window
-    glViewport(0, 0, 800, 600);
-    glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+    // setup vertices to be displayed and buffers
+    float vertices[] = {
+        -0.5f, -0.5f, 0.0f,
+        0.5f, -0.5f, 0.0f,
+        0.0f, 0.5f, 0.0f
+    };
+
+    unsigned int VBO;
+    glGenBuffers(1, &VBO);
+    glBindBuffer(GL_ARRAY_BUFFER, VBO);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
     // render loop
     while(!glfwWindowShouldClose(window))
