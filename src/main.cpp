@@ -7,8 +7,8 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow *window);
 
 // screen settings
-const unsigned int SCR_WIDTH = 800;
-const unsigned int SCR_HEIGHT = 600;
+const unsigned int SCR_WIDTH = 1600;
+const unsigned int SCR_HEIGHT = 1200;
 
 const char *vertexShaderSource = "#version 330 core\n"
     "layout (location = 0) in vec3 aPos;\n"
@@ -101,16 +101,25 @@ int main()
     // Buffers
     // ##############################
 
-    float vertices[] = {
+    /* float vertices[] = {
          0.5f,  0.5f, 0.0f,  // top right
          0.5f, -0.5f, 0.0f,  // bottom right
         -0.5f, -0.5f, 0.0f,  // bottom left
         -0.5f,  0.5f, 0.0f   // top left 
+    }; */
+
+    float vertices[] = {
+        -0.5f, 0.0f, 0.0f,
+        0.0f, -0.5f, 0.0f,
+        0.0f, 0.0f, 0.0f,
+        0.5f, 0.0f, 0.0f,
+        1.0f, 0.0f, 0.0f,
+        1.0f, 0.5f, 0.0f
     };
 
-    unsigned int indices[] = {  // note that we start from 0!
-        0, 1, 3,  // first Triangle
-        1, 2, 3   // second Triangle
+    unsigned int indices[] = {
+        0, 1, 2,  // first Triangle
+        3, 4, 5   // second Triangle
     };
 
     unsigned int VBO, VAO, EBO;
@@ -143,13 +152,20 @@ int main()
 
         // render
         // _________
+
+        // background color
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
 
         // draw rectangle
+        //glUseProgram(shaderProgram);
+        //glBindVertexArray(VAO); // seeing as we only have a single VAO there's no need to bind it every time, but we'll do so to keep things a bit more organized
+        //glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+
+        // draw two neighboring triangles
         glUseProgram(shaderProgram);
-        glBindVertexArray(VAO); // seeing as we only have a single VAO there's no need to bind it every time, but we'll do so to keep things a bit more organized
-        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+        glBindVertexArray(VAO);
+        glDrawArrays(GL_TRIANGLES, 0, 6);
  
         // Swap buffers and poll for events
         // __________
