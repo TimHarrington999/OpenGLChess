@@ -1,8 +1,8 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
-
 #include <iostream>
 
+// function headers
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow *window);
 
@@ -10,6 +10,7 @@ void processInput(GLFWwindow *window);
 const unsigned int SCR_WIDTH = 2000;
 const unsigned int SCR_HEIGHT = 2000;
 
+// shader sources
 const char *vertexShaderSource = "#version 330 core\n"
     "layout (location = 0) in vec3 aPos;\n"
     "void main()\n"
@@ -322,7 +323,7 @@ int main()
 
         glUseProgram(boardShaderProgram);
         glBindVertexArray(BoardVAO);
-        glDrawElements(GL_TRIANGLES, 64, GL_UNSIGNED_INT, 0);
+        glDrawElements(GL_TRIANGLES, 192, GL_UNSIGNED_INT, 0);
 
         /* // background color
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
@@ -348,6 +349,7 @@ int main()
         glfwPollEvents();
     }
 
+    // once the window is requested to be closed, close out buffers and terminate
     glDeleteVertexArrays(1, &BoardVAO);
     glDeleteBuffers(1, &BoardVBO);
     glDeleteBuffers(1, &BoardEBO);
@@ -361,6 +363,7 @@ int main()
 // process keyboard input
 void processInput(GLFWwindow *window)
 {
+    // pressing esc key will close the window and the application
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(window, true);
 }
